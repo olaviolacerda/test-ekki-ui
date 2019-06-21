@@ -3,14 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "4all-ui": "^2.3.0",
     "axios": "^0.19.0",
     "date-fns": "^1.30.1",
-    "date-fns-tz": "^1.0.7",
-    "evergreen-ui": "^4.17.0",
     "react": "^16.8.6",
+    "react-app-flexbox-grid": "^3.0.0",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "react-toastify": "^5.3.1",
+    "styled-components": "^4.3.2"
   },
   "scripts": {
     "start": "react-scripts start",

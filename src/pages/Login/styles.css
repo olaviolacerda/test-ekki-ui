@@ -13,15 +13,6 @@
     flex-direction: column;
 }
 
-#main-container form input {
-    height: 48px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-    padding: 0 20px;
-    margin-top: 30px;
-}
-
 #main-container form button {
     height: 48px;
     background: #534FC4;
