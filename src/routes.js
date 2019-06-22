@@ -2,14 +2,17 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
+import Header from './components/Header'
 import Login from './pages/Login'
 import Home from './pages/Home'
 
 const Routes = () => (
     <BrowserRouter>
-        <Switch >
+        <Header />
+        <Switch>
             <Route path='/' exact component={Login} />
-            <Route path='/home/:id' component={Home} />
+            <Route path='/home' component={Home} />
+            <Route component={NotFound} />
         </Switch>
     </BrowserRouter>
 )

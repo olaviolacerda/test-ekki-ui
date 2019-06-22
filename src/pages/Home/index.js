@@ -1,27 +1,38 @@
 import React, { Component } from 'react';
-import {
-    format, parseISO
-} from 'date-fns';
-
 import api from '../../services/api'
+
+import Transactions from '../../components/Transactions';
+import Account from '../../components/Account';
 
 export default class Home extends Component {
     state = {
-        transactions: []
+        user: {},
+        account: {}
     }
 
     async componentDidMount() {
-        const user = this.props.match.params.id
-        const response = await api.get(`accounts/${user}/extract`)
+        const userId = JSON.parse(sessionStorage.getItem('EkkiBank::User')).id;
 
+        const user = await api.get(`users/${userId}`)
+        const account = await api.get(`users/${userId}/account`)
 
-        this.setState({ transactions: response.data })
+        this.setState({
+            user: user.data,
+            account: account.data
+        })
 
     }
 
     render() {
-        const { transactions } = this.state
+        const { user, account } = this.state
 
-        return <div>FFFF</div>
+        return <div>
+            <Account>
+                <span>{user.name}</span>
+                <span>Saldo R${account.balance}</span>
+                <span>Limite R${account.limit}</span>
+            </Account>
+            <Transactions />
+        </div>
     }
 }
