@@ -93,7 +93,7 @@ export default class Transactions extends Component {
         return (
             <DefaultLayout>
                 <Container style={{ marginTop: '5em' }}>
-                    <Header as='h2'>
+                    <Header as='h2' >
                         Transferências
                         <Header.Subheader>Aqui você pode ficar por dentro de todas as movimentaçãos na sua conta e realizar transferências</Header.Subheader>
                     </Header>
@@ -103,7 +103,9 @@ export default class Transactions extends Component {
                             <Button fluid onClick={this.updateTransactions}
                                 icon='redo'
                                 labelPosition='right'
-                                content="Você possui novas transferências, clique para atualizar."></Button>}</Segment>
+                                color="teal"
+                                content="Você possui novas transferências, clique para atualizar."></Button>}
+                    </Segment>
                     {transactionsFiltered && <Tab menu={{ secondary: true, pointing: true }} panes={panes} />}
                 </Container>
             </DefaultLayout >

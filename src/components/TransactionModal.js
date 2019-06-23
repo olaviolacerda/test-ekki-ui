@@ -3,12 +3,14 @@ import api from '../services/api'
 
 import { Link } from 'react-router-dom'
 import { Form, Message, Modal, Button, Label } from 'semantic-ui-react'
+import { ToastContainer, toast } from 'react-toastify'
 
 export default class TransactionModal extends Component {
     state = {
         account: {},
         contacts: [],
-        open: true
+        open: false,
+
     }
 
     async componentDidMount() {
@@ -39,6 +41,10 @@ export default class TransactionModal extends Component {
     handleSubmit = (e) => {
         e.preventDefault()
 
+        if (this.state.amount == undefined || this.state.toUserId == undefined) {
+            return false;
+        }
+
         const body = {
             fromUserId: this.state.account.userId,
             toUserId: this.state.toUserId,
@@ -46,17 +52,25 @@ export default class TransactionModal extends Component {
         }
 
         api.post('transactions', body)
-            .then(resp => console.log(resp.data.message))
-            .catch(err => console.log(err.message))
+            .then(resp => {
+                this.setState({ open: false })
+                toast.success(resp.data.message)
+            })
+            .catch(err => {
+                this.setState({ open: false })
+                console.log(err)
+                toast.error('Não realizada, saldo insuficiente.');
+            })
     }
 
     render() {
         const { open, account, contacts } = this.state
 
         return <div>
-            {contacts.length > 0 ? (<Modal size={'small'} dimmer="blurring"
+            {contacts.length > 0 ? (<Modal open={open} size={'small'} dimmer="blurring"
                 trigger={<Button color="green" onClick={() => this.setState({ open: true })}>Realizar nova transferência</Button>}
-                closeIcon>
+            >
+                <Modal.Header>Nova transferência</Modal.Header>
                 <Modal.Content>
                     {account.balance == 0 && <Message
                         warning
@@ -69,6 +83,7 @@ export default class TransactionModal extends Component {
                             fluid
                             search
                             selection
+                            label="Contatos"
                             options={contacts}
                             onChange={this.handleUserChange}
                         />
@@ -85,6 +100,8 @@ export default class TransactionModal extends Component {
                     </Form>
 
                 </Modal.Content>
+
+
             </Modal >) :
                 (<Message
                     warning
@@ -92,6 +109,17 @@ export default class TransactionModal extends Component {
                     content={['Para realizar uma transferência, adicione contatos.', ' ', <Link to="/contacts">Adicionar contatos</Link>]}
                 >
                 </Message>)}
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnVisibilityChange={false}
+                draggable
+                pauseOnHover
+            />
         </div>
 
     }
