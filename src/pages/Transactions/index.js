@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import api from '../../services/api'
 
-import { Dropdown, Container, Segment, Header } from 'semantic-ui-react'
+import { Container, Icon, Segment, Header, Tab, Button } from 'semantic-ui-react'
 import TransactionsList from './TransactionsList'
-import NewTransferModal from './NewTransferModal'
 import DefaultLayout from '../../components/DefaultLayout'
+import TransactionModal from '../../components/TransactionModal'
+import socket from 'socket.io-client'
+
+
 
 export default class Transactions extends Component {
     state = {
         transactions: {},
         transactionsOrdered: {},
-        activeItem: 'closest'
+        updateTransactions: false
     }
+
 
     handleItemClick = (e, { name }) => {
         this.sortTransactions(e.target.id)
@@ -37,9 +41,11 @@ export default class Transactions extends Component {
     }
 
     async componentDidMount() {
-        const userId = JSON.parse(sessionStorage.getItem('EkkiBank::User')).id;
+        const user = JSON.parse(sessionStorage.getItem('EkkiBank::User'));
 
-        const transactions = await api.get(`transactions/${userId}`)
+        this.subscribeToTransactionEvents()
+
+        const transactions = await api.get(`transactions/${user.id}`)
 
         this.setState({
             transactions: transactions.data,
@@ -48,46 +54,59 @@ export default class Transactions extends Component {
 
     }
 
-    render() {
+    subscribeToTransactionEvents = async () => {
+        const io = socket('http://localhost:3001')
+        const user = JSON.parse(sessionStorage.getItem('EkkiBank::User'))
 
-        const filterOptions = [
-            {
-                key: '0',
-                text: 'Todas',
-                value: '0',
-            },
-            {
-                key: '1',
-                text: 'Enviadas',
-                value: '1',
-            },
-            {
-                key: '2',
-                text: 'Recebidas',
-                value: '2',
-            },
+
+        await io.on(`transaction-${user.cpf}`, data => {
+            console.log(data)
+            this.setState({
+                updateTransactions: true
+            })
+        })
+    }
+
+    updateTransactions = async () => {
+        const user = JSON.parse(sessionStorage.getItem('EkkiBank::User'));
+
+
+        const transactions = await api.get(`transactions/${user.id}`)
+
+        this.setState({
+            transactions: transactions.data,
+            transactionsFiltered: transactions.data,
+            updateTransactions: false
+        })
+    }
+
+    render() {
+        const { transactionsFiltered, updateTransactions } = this.state
+
+        const panes = [
+            { menuItem: 'Todas', render: () => <Tab.Pane attached={false}><TransactionsList transactions={transactionsFiltered} /></Tab.Pane> },
+            { menuItem: 'Enviadas', render: () => <Tab.Pane attached={false}><TransactionsList transactions={transactionsFiltered} /></Tab.Pane> },
+            { menuItem: 'Recebidas', render: () => <Tab.Pane attached={false}><TransactionsList transactions={transactionsFiltered} /></Tab.Pane> },
         ]
-        const { activeItem, transactionsFiltered } = this.state
+
 
         return (
             <DefaultLayout>
                 <Container style={{ marginTop: '5em' }}>
                     <Header as='h2'>
-                        Account Settings
-                    <Header.Subheader>Manage your account settings and set email preferences</Header.Subheader>
+                        Transferências
+                        <Header.Subheader>Aqui você pode ficar por dentro de todas as movimentaçãos na sua conta e realizar transferências</Header.Subheader>
                     </Header>
-                    {transactionsFiltered && <TransactionsList transactions={transactionsFiltered} />}
+                    <TransactionModal />
+                    <Segment basic>
+                        {updateTransactions &&
+                            <Button fluid onClick={this.updateTransactions}
+                                icon='redo'
+                                labelPosition='right'
+                                content="Você possui novas transferências, clique para atualizar."></Button>}</Segment>
+                    {transactionsFiltered && <Tab menu={{ secondary: true, pointing: true }} panes={panes} />}
                 </Container>
-            </DefaultLayout>
+            </DefaultLayout >
         )
     }
 }
-
-//  <Segment ><span>
-//                     Mostrar{' '}
-//                     <Dropdown
-//                         inline
-//                         options={filterOptions}
-//                         defaultValue={filterOptions[0].value}
-//                     />
-//                 </span><NewTransferModal /></Segment>

@@ -3,7 +3,6 @@ import React from 'react';
 import NumberFormat from 'react-number-format';
 import { format } from 'date-fns';
 import pt from 'date-fns/locale/pt';
-import transactionStatus from '../../helpers/transactionHelper'
 
 import Price from '../../components/Price';
 
@@ -28,10 +27,9 @@ const TransactionsTable = ({ transactions }) => {
       <Table.Body>
         {transactions.map(transaction => {
           const { fromUser, toUser, status, transactionId, addition, amount, createdAt } = transaction
-          const statusFormatted = transactionStatus(status);
 
-          return <Table.Row>
-            <Table.Cell>{addition ? 'Recebida' : 'Enviada'}</Table.Cell>
+          return <Table.Row key={transactionId}>
+            <Table.Cell>{addition ? 'Recebida' : 'Enviada'}{status}</Table.Cell>
             <Table.Cell >
               <Price color={addition ? '#00ca9b' : '#ff5d70'}>
                 <NumberFormat

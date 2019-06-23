@@ -1,22 +1,29 @@
 import React from 'react';
 
-import { List, Image, Icon } from 'semantic-ui-react'
+import { List, Dropdown, Button } from 'semantic-ui-react'
+
+const options = [
+    { key: 'edit', text: 'Editar', value: 'edit' },
+    { key: 'delete', text: 'Remover', value: 'delete' },
+]
+
 
 const ContactsList = ({ contacts }) => <List divided verticalAlign='middle'>
-    <List.Item><List.Content floated='right'>
-        <Icon name='arrow right' />
-    </List.Content>
-        <Icon name='user plus' />
-        <List.Content>Transferir para novo contato</List.Content></List.Item>
-    {contacts.map(contact =>
-        <List.Item>
-            <List.Content floated='right'>
-                <Icon name='arrow right' />
-            </List.Content>
-            <Image avatar src='https://react.semantic-ui.com/images/avatar/small/lena.png' />
-            <List.Content>{contact.nickname}</List.Content>
+    {contacts.map(contact => {
+        return <List.Item key={contact.contactId}>
+            <List.Item>
+                <List.Header>{contact.nickname}</List.Header>
+                <List.Content floated='right'>
+                    <Dropdown floating options={options} text='Ações' />
+                </List.Content>
+                <List.Content>{contact.realName}</List.Content>
+                <List.Content>{contact.phone}</List.Content>
+
+            </List.Item>
         </List.Item>
-    )}
-</List>;
+    })}
+</List>
+
+
 
 export default ContactsList;
