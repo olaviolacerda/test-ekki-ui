@@ -1,19 +1,25 @@
 import styled from 'styled-components';
 
-const Account = styled.li`
+const Account = styled.div`
     display: flex;
-    padding: 20px;
-    align-items: flex-start;
-    justify-content: space-between;
-    color: #534FC4;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
     flex-direction: column;
-    box-sizing: border-box;
-    border: 1px solid rgba(0,0,0,.1);
-    margin: 10px 20px;
-    background-color: #fff;
-    border-radius: 14px;
+    background: #4e54c8; 
+    background: -webkit-linear-gradient(to right, #8f94fb, #4e54c8);  
+    background: linear-gradient(to right, #8f94fb, #4e54c8); 
+    min-height: 300px;
     box-shadow: none;
     transition: all 200ms ease;
+
+    & > span {
+        margin: 5px 0;
+        &:nth-child(2) {
+            font-weight: bold;
+            font-size: 30pt;
+        }
+    }
 `
 
 export default Account;

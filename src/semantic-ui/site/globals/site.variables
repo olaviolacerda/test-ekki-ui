@@ -1,1 +1,4 @@
-@teal: #002f4e;
+@primaryColor: #4e54c8;
+@secondaryColor: #8f94fb;
+@red: #ff5d70;
+@green: #00ca9b;
