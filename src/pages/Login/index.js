@@ -3,6 +3,8 @@ import React, {
 } from 'react';
 import api from '../../services/api'
 
+
+import { Link } from 'react-router-dom'
 import DefaultLayout from '../../components/DefaultLayout'
 import { Button, Form, Header, Image } from 'semantic-ui-react'
 
@@ -30,7 +32,7 @@ export default class Login extends Component {
 
         if (this.state.cpf.length < 11) {
             this.setState({ error: true })
-            return
+            return false
         }
 
         await api.post('login', {
@@ -38,7 +40,7 @@ export default class Login extends Component {
         }).then(resp => {
             if (resp.data != null) {
                 sessionStorage.setItem('EkkiBank::User', JSON.stringify(resp.data))
-                this.props.history.push(`/home`)
+                this.props.history.push(`/`)
             } else {
                 this.notify('Usuário não encontrado');
             }
@@ -58,7 +60,7 @@ export default class Login extends Component {
 
                 <Image src={logo} size="small" centered alt="Ekki Bank" />
                 <Header as='h1' textAlign='center'>
-                    Ekki Bank
+                    Entrar no Ekki Bank
 </Header>
                 <Form size='large' onSubmit={this.handleSubmit}>
                     <Form.Input
@@ -75,6 +77,7 @@ export default class Login extends Component {
                         Entrar
 </Button>
                 </Form>
+                Ainda não possuí conta? <Link to="/register">Criar</Link>
             </DefaultLayout >
         );
     }

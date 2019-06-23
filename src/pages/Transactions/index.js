@@ -97,7 +97,9 @@ export default class Transactions extends Component {
                         Transferências
                         <Header.Subheader>Aqui você pode ficar por dentro de todas as movimentaçãos na sua conta e realizar transferências</Header.Subheader>
                     </Header>
-                    <TransactionModal />
+                    <Container>
+                        <TransactionModal />
+                    </Container>
                     <Segment basic>
                         {updateTransactions &&
                             <Button fluid onClick={this.updateTransactions}

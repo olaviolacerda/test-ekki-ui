@@ -11,7 +11,7 @@ export default class MenuExampleBasic extends Component {
     logOut = () => {
         sessionStorage.removeItem('EkkiBank::User')
 
-        window.location.pathname = '/'
+        window.location.pathname = '/login'
     }
 
     render() {
@@ -20,13 +20,10 @@ export default class MenuExampleBasic extends Component {
         return (
             <div>
                 <Menu borderless compact fixed={"top"} >
-                    <Menu.Item>
-                        <b>Ekki Bank</b>
-                    </Menu.Item>
                     <Menu.Item
                         as={Link}
                         name='resumo'
-                        to="/home"
+                        to="/"
                         active={activeItem === 'resumo'}
                         onClick={this.handleItemClick}
                     >
