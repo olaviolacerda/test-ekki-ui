@@ -11,7 +11,7 @@ import { Button, Form, Header, Image } from 'semantic-ui-react'
 import { ToastContainer, toast } from 'react-toastify';
 
 
-import logo from '../../assets/main.svg'
+import logo from '../../assets/login.svg'
 
 export default class Login extends Component {
     state = {
@@ -55,14 +55,18 @@ export default class Login extends Component {
     render() {
         return (
             <DefaultLayout header verticalAlign="middle" rowMargin='-100px' textAlign="center" gridStyles={{ height: '100vh' }
-            } columnStyles={{ maxWidth: 320 }}>
+            } >
                 <ToastContainer />
-
+                <Header
+                    as='h1'
+                    content='Ekki Bank'
+                    subheader='O melhor lugar para você transferir dinheiro para seus amigos'
+                />
                 <Image src={logo} size="small" centered alt="Ekki Bank" />
-                <Header as='h1' textAlign='center'>
-                    Entrar no Ekki Bank
-</Header>
-                <Form size='large' onSubmit={this.handleSubmit}>
+                <Header as='h3' textAlign='center'>
+                    Fazer login
+                </Header>
+                <Form style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }} size='large' onSubmit={this.handleSubmit}>
                     <Form.Input
                         fluid
                         placeholder='Insira seu CPF'
@@ -77,6 +81,7 @@ export default class Login extends Component {
                         Entrar
 </Button>
                 </Form>
+
                 Ainda não possuí conta? <Link to="/register">Criar</Link>
             </DefaultLayout >
         );

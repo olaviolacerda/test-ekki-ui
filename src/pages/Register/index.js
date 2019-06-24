@@ -10,7 +10,7 @@ import { Button, Form, Header, Image } from 'semantic-ui-react'
 import { ToastContainer, toast } from 'react-toastify';
 
 
-import logo from '../../assets/main.svg'
+import logo from '../../assets/register.svg'
 
 export default class Register extends Component {
     state = {
@@ -79,7 +79,7 @@ export default class Register extends Component {
 
                 <Image src={logo} size="small" centered alt="Ekki Bank" />
                 <Header as='h1' textAlign='center'>
-                    Cadastro Ekki Bank
+                    Cadastrar
 </Header>
                 <Form size='large' onSubmit={this.handleSubmit}>
                     <Form.Input
