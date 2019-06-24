@@ -1,6 +1,4 @@
-import React, {
-    Component
-} from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom'
 import DefaultLayout from '../../components/DefaultLayout'
 import { Image, Header } from 'semantic-ui-react'

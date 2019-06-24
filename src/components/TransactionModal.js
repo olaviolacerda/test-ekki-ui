@@ -10,6 +10,7 @@ export default class TransactionModal extends Component {
         account: {},
         contacts: [],
         open: false,
+        amount: 0
 
     }
 
@@ -69,7 +70,7 @@ export default class TransactionModal extends Component {
     }
 
     render() {
-        const { open, account, contacts } = this.state
+        const { open, account, contacts, amount } = this.state
         const { selectedContact } = this.props
         return <div>
             {contacts.length > 0 || selectedContact ? (<Modal closeOnDimmerClick={true} open={open} size={'small'} dimmer="blurring"
@@ -77,10 +78,10 @@ export default class TransactionModal extends Component {
             >
                 <Modal.Header>Nova transferência</Modal.Header>
                 <Modal.Content>
-                    {account.balance == 0 && <Message
+                    {(account.balance == 0 || (amount > Number(account.balance))) && <Message
                         warning
                         header='Atenção: Você usará o limite para realizar essa transferência'
-                        content='Seu saldo é R$ 0,00. Então você usará seu limite, se disponível.'
+                        content='Seu saldo é R$ 0,00 ou insuficiente para o valor da transferência. Então você usará seu limite, se disponível.'
                     />}
                     <Form >
                         {selectedContact ?

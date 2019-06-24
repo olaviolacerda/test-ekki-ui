@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import api from '../../services/api'
 
-import { Header, Container, Segment, Message, Dropdown, Button, Tab } from 'semantic-ui-react'
+import { Header, Container, Message, Tab } from 'semantic-ui-react'
 import ContactsList from './ContactsList'
 import UsersList from './UsersList'
 

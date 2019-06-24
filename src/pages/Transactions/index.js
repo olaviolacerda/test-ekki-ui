@@ -94,6 +94,7 @@ export default class Transactions extends Component {
             { menuItem: { key: 'received', icon: 'arrow up', content: 'Recebidas' }, render: () => <Tab.Pane attached={false}><TransactionsList loading={loading} transactions={transactionsFiltered} /></Tab.Pane> },
         ]
 
+        console.log(transactionsFiltered)
 
         return (
             <DefaultLayout>
@@ -113,7 +114,9 @@ export default class Transactions extends Component {
                                 color="teal"
                                 content="Você possui novas transferências, clique para atualizar."></Button>}
                     </Segment>
+
                     {transactionsFiltered && <Tab onTabChange={this.handleChange} menu={{ secondary: true }} panes={panes} />}
+
                 </Container>
             </DefaultLayout >
         )
