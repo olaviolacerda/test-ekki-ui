@@ -1,24 +1,25 @@
 import React from 'react';
 
-import { List, Dropdown, Button } from 'semantic-ui-react'
+import { List, Segment } from 'semantic-ui-react'
+import DeleteContactModal from '../../components/DeleteContactModal'
+import TransactionModal from '../../components/TransactionModal'
 
-const options = [
-    { key: 'edit', text: 'Editar', value: 'edit' },
-    { key: 'delete', text: 'Remover', value: 'delete' },
-]
-
-
-const ContactsList = ({ contacts }) => <List divided verticalAlign='middle'>
+const ContactsList = ({ contacts }) => <List verticalAlign='middle'>
     {contacts.map(contact => {
+        console.log(contact)
         return <List.Item key={contact.contactId}>
             <List.Item>
-                <List.Header>{contact.nickname}</List.Header>
-                <List.Content floated='right'>
-                    <Dropdown floating options={options} text='Ações' />
-                </List.Content>
-                <List.Content>{contact.realName}</List.Content>
-                <List.Content>{contact.phone}</List.Content>
-
+                <Segment clearing >
+                    <List.Header>{contact.nickname}</List.Header>
+                    <List.Content style={{ fontStyle: 'italic' }}>({contact.realName})</List.Content>
+                    <List.Content>{contact.phone}</List.Content>
+                    <List.Content floated='right' style={{ marginTop: 2, marginBottom: 2 }}>
+                        <DeleteContactModal userName={contact.nickname} contactId={contact.contactId} />
+                    </List.Content>
+                    <List.Content floated='right' style={{ marginTop: 2, marginBottom: 2 }}>
+                        <TransactionModal selectedContact={contact} />
+                    </List.Content>
+                </Segment>
             </List.Item>
         </List.Item>
     })}
@@ -26,4 +27,4 @@ const ContactsList = ({ contacts }) => <List divided verticalAlign='middle'>
 
 
 
-export default ContactsList;
+export default ContactsList

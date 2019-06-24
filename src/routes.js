@@ -22,6 +22,7 @@ const Routes = () => (
         <Route path='/login' exact component={Login} />
         <Route path="/register" component={Register} />
         <Switch >
+            <ForbbidenRoute path="/" exact component={Transactions} />
             <ForbbidenRoute path="/transactions" component={Transactions} />
             <ForbbidenRoute path="/contacts" component={Contacts} />
         </Switch>

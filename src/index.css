@@ -5,9 +5,9 @@ body {
     font-family: 'Nunito', sans-serif;
 }
 
-* {
+p, td, h1, h2, h3, h4, h5, h6, span, td, tr, th, li, ul, ol,  .header, .item {
     color: #6c7293;
-}
+} 
 
 .ui.segment {
     border-radius: 4px;
@@ -22,6 +22,3 @@ body {
 }
 
 
-.table tr th {
-    color: #6c7293;
-}

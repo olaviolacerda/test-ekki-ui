@@ -10,7 +10,7 @@ import Price from '../../components/Price';
 import { Table, Icon, Label } from 'semantic-ui-react'
 
 
-const statusOptions = [{}, { text: 'Realizada', bg: '#bffaec', color: ' #00ca9b' }, { text: 'Cancelada', bg: '#ffe0e2', color: '#ff5d70' }]
+const statusOptions = [{}, { text: 'Confirmada', bg: '#bffaec', color: ' #00ca9b' }, { text: 'Cancelada', bg: '#ffe0e2', color: '#ff5d70' }]
 
 const TransactionsTable = ({ transactions }) => {
   return (

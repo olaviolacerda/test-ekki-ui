@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import api from '../services/api'
 
 import { Link } from 'react-router-dom'
-import { Form, Message, Modal, Button, Label } from 'semantic-ui-react'
-import { ToastContainer, toast } from 'react-toastify'
+import { Form, Icon, Message, Segment, Modal, Button, Label } from 'semantic-ui-react'
+import { toast } from 'react-toastify'
 
 export default class TransactionModal extends Component {
     state = {
@@ -23,6 +23,11 @@ export default class TransactionModal extends Component {
                 account: account.data,
                 contacts: this.formatContacts(contacts.data),
             })
+            if (this.props.selectedContact) {
+                this.setState({
+                    toUserId: this.props.selectedContact.userId
+                })
+            }
         }
     }
 
@@ -65,10 +70,10 @@ export default class TransactionModal extends Component {
 
     render() {
         const { open, account, contacts } = this.state
-
+        const { selectedContact } = this.props
         return <div>
-            {contacts.length > 0 ? (<Modal open={open} size={'small'} dimmer="blurring"
-                trigger={<Button color="green" onClick={() => this.setState({ open: true })}>Realizar nova transferência</Button>}
+            {contacts.length > 0 || selectedContact ? (<Modal closeOnDimmerClick={true} open={open} size={'small'} dimmer="blurring"
+                trigger={<Button icon labelPosition='right' color="green" onClick={() => this.setState({ open: true })}><Icon inverted name='arrow right' />Realizar nova transferência</Button>}
             >
                 <Modal.Header>Nova transferência</Modal.Header>
                 <Modal.Content>
@@ -77,27 +82,36 @@ export default class TransactionModal extends Component {
                         header='Atenção: Você usará o limite para realizar essa transferência'
                         content='Seu saldo é R$ 0,00. Então você usará seu limite, se disponível.'
                     />}
-                    <Form onSubmit={this.handleSubmit}>
-                        <Form.Dropdown
-                            placeholder='Selecione o contato'
-                            fluid
-                            search
-                            selection
-                            label="Contatos"
-                            options={contacts}
-                            onChange={this.handleUserChange}
-                        />
+                    <Form >
+                        {selectedContact ?
+                            (
+                                <Form.Input
+                                    type='text'
+                                    fluid
+                                    disabled
+                                    label='Contato'
+                                    value={selectedContact.nickname} />
+                            ) :
+                            (<Form.Dropdown
+                                placeholder='Selecione o contato'
+                                fluid
+                                search
+                                selection
+                                label="Contatos"
+                                options={contacts}
+                                onChange={this.handleUserChange}
+                            />)}
                         <Form.Input error={this.state.error} labelPosition='left' type='text' fluid label='Valor' name="amount" placeholder='Digite o valor' onChange={this.handleAmountChange}>
                             <Label basic>$</Label>
                             <input />
                         </Form.Input>
 
-                        <Form.Group>
-                            <Form.Button color="red" onClick={() => this.setState({ open: false })}>Cancelar</Form.Button>
-                            <Form.Button color="green" type="submit">Transferir</Form.Button>
-                        </Form.Group>
 
-                    </Form>
+
+                    </Form> <Segment basic clearing>
+                        <Form.Button icon labelPosition='right' floated="right" color="green" type="submit" onClick={this.handleSubmit}><Icon inverted name='check' />Transferir</Form.Button>
+                        <Form.Button icon labelPosition='right' floated="right" secondary inverted onClick={() => this.setState({ open: false })}><Icon name='remove' />Cancelar</Form.Button>
+                    </Segment>
 
                 </Modal.Content>
 
@@ -109,17 +123,6 @@ export default class TransactionModal extends Component {
                     content={['Para realizar uma transferência, adicione contatos.', ' ', <Link to="/contacts">Adicionar contatos</Link>]}
                 >
                 </Message>)}
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop
-                closeOnClick
-                rtl={false}
-                pauseOnVisibilityChange={false}
-                draggable
-                pauseOnHover
-            />
         </div>
 
     }

@@ -45,21 +45,14 @@ export default class Contacts extends Component {
     compareUsersWithContacts = (users, contacts, userId) => {
         const contactsIds = contacts.map(contact => contact.userId)
 
-        const usersWithouLogged = users.filter(user => user.id != userId)
+        const usersWithouLogged = users.filter(user => user.id != userId && !contactsIds.includes(user.id))
 
-        const formatUsers = usersWithouLogged.map(user => {
-            return {
-                ...user,
-                contact: contactsIds.includes(user.id)
-            }
-        })
-
-        return formatUsers;
+        return usersWithouLogged;
     }
 
 
     render() {
-        const { contacts, users, value, user } = this.state
+        const { contacts, users, user } = this.state
 
         const panes = [
             {
@@ -81,7 +74,7 @@ export default class Contacts extends Component {
                     Contatos
                     <Header.Subheader>Administre seus contatos, você pode realizar transferências por aqui ou adicionar novos contatos</Header.Subheader>
                 </Header>
-                {contacts && <Tab menu={{ secondary: true, pointing: true }} panes={panes} />}
+                {contacts && <Tab menu={{ secondary: true }} panes={panes} />}
             </Container>
         </DefaultLayout>
     }
