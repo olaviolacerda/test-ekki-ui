@@ -7,18 +7,20 @@ import pt from 'date-fns/locale/pt';
 import Price from '../../components/Price';
 
 
-import { Table } from 'semantic-ui-react'
+import { Table, Icon, Label } from 'semantic-ui-react'
 
+
+const statusOptions = [{}, { text: 'Realizada', bg: '#bffaec', color: ' #00ca9b' }, { text: 'Cancelada', bg: '#ffe0e2', color: '#ff5d70' }]
 
 const TransactionsTable = ({ transactions }) => {
   return (
     <Table basic="very" singleLine >
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell>Tipo</Table.HeaderCell>
-          <Table.HeaderCell>Data</Table.HeaderCell>
-          <Table.HeaderCell>Valor</Table.HeaderCell >
-          <Table.HeaderCell>Status</Table.HeaderCell >
+          <Table.HeaderCell>Status</Table.HeaderCell>
+          <Table.HeaderCell>Valor</Table.HeaderCell>
+          <Table.HeaderCell>ID</Table.HeaderCell >
+          <Table.HeaderCell>Usuário</Table.HeaderCell >
           <Table.HeaderCell >Data</Table.HeaderCell >
 
         </Table.Row>
@@ -29,9 +31,16 @@ const TransactionsTable = ({ transactions }) => {
           const { fromUser, toUser, status, transactionId, addition, amount, createdAt } = transaction
 
           return <Table.Row key={transactionId}>
-            <Table.Cell>{addition ? 'Recebida' : 'Enviada'}{status}</Table.Cell>
+            <Table.Cell>
+
+              <Label style={{ backgroundColor: statusOptions[status].bg, color: statusOptions[status].color }} horizontal>
+                {statusOptions[status].text}
+              </Label>
+            </Table.Cell>
             <Table.Cell >
-              <Price color={addition ? '#00ca9b' : '#ff5d70'}>
+
+              <Price >
+                <Icon color={addition ? 'green' : 'red'} name={addition ? 'arrow up' : 'arrow down'} />{'  '}
                 <NumberFormat
                   value={Number(amount)}
                   displayType={'text'}
@@ -42,7 +51,7 @@ const TransactionsTable = ({ transactions }) => {
                   prefix={'R$'} />
               </Price>
             </Table.Cell>
-            <Table.Cell  >
+            <Table.Cell>
               ID: {transactionId}
             </Table.Cell>
             <Table.Cell  >

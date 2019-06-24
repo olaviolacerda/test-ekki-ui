@@ -40,7 +40,7 @@ export default class Login extends Component {
         }).then(resp => {
             if (resp.data != null) {
                 sessionStorage.setItem('EkkiBank::User', JSON.stringify(resp.data))
-                this.props.history.push(`/`)
+                this.props.history.push(`/transactions`)
             } else {
                 this.notify('Usuário não encontrado');
             }

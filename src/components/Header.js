@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { Menu } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import AccountInfo from './AccountInfo'
-
+import { ToastContainer, toast } from 'react-toastify';
+import socket from 'socket.io-client'
+import { Icon } from 'semantic-ui-react'
 export default class MenuExampleBasic extends Component {
     state = {}
 
@@ -14,22 +16,27 @@ export default class MenuExampleBasic extends Component {
         window.location.pathname = '/login'
     }
 
+    componentDidMount() {
+        this.subscribeToTransactionEvents()
+    }
+
+    subscribeToTransactionEvents = async () => {
+        const io = socket('http://localhost:3001')
+        const user = JSON.parse(sessionStorage.getItem('EkkiBank::User'))
+
+
+        await io.on(`transaction-${user.cpf}`, data => {
+            if (data.toUserId == user.id)
+                toast.info(`Você recebeu uma transferência no valor de R$${data.amount}`)
+        })
+    }
+
     render() {
         const { activeItem } = this.state
 
         return (
             <div>
-                <Menu borderless compact fixed={"top"} >
-                    <Menu.Item
-                        as={Link}
-                        name='resumo'
-                        to="/"
-                        active={activeItem === 'resumo'}
-                        onClick={this.handleItemClick}
-                    >
-                        Resumo
-        </Menu.Item>
-
+                <Menu borderless fixed={"top"} >
                     <Menu.Item as={Link} name='extrato' to="/transactions" active={activeItem === 'extrato'} onClick={this.handleItemClick}>
                         Transferências
         </Menu.Item>
@@ -49,11 +56,12 @@ export default class MenuExampleBasic extends Component {
                         position='right'
                         onClick={this.logOut}
                     >
-                        Sair
+                        <Icon name='log out' /> Sair
         </Menu.Item>
 
                 </Menu>
                 <AccountInfo />
+                <ToastContainer />
             </div>
         )
     }

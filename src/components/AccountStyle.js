@@ -4,7 +4,7 @@ const Account = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    
     flex-direction: column;
     background: #4e54c8; 
     background: -webkit-linear-gradient(to right, #8f94fb, #4e54c8);  
@@ -13,11 +13,15 @@ const Account = styled.div`
     box-shadow: none;
     transition: all 200ms ease;
 
+    & > span > span {
+        color: #fff;
+    }
     & > span {
-        margin: 5px 0;
+        color: #fff;
+        margin: 10px 0;
         &:nth-child(2) {
             font-weight: bold;
-            font-size: 30pt;
+            font-size: 40pt;
         }
     }
 `

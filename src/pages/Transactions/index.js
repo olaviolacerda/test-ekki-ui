@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import api from '../../services/api'
 
-import { Container, Icon, Segment, Header, Tab, Button } from 'semantic-ui-react'
+import { Container, Segment, Header, Tab, Button } from 'semantic-ui-react'
 import TransactionsList from './TransactionsList'
 import DefaultLayout from '../../components/DefaultLayout'
 import TransactionModal from '../../components/TransactionModal'
@@ -16,31 +16,31 @@ export default class Transactions extends Component {
         updateTransactions: false
     }
 
-
-    handleItemClick = (e, { name }) => {
-        this.sortTransactions(e.target.id)
-        this.setState({ activeItem: name })
-    }
-
     sortTransactions = (orderBy) => {
+        this.setState({ loading: true })
         const { transactions } = this.state;
+
+        console.log(transactions)
         if (orderBy == 0) {
-            this.setState({ transactionsFiltered: transactions })
+            this.setState({ transactionsFiltered: transactions, loading: false })
         } else if (orderBy == 1) {
             this.setState({
                 transactionsFiltered: this.state.transactions
-                    .filter(transaction => !transaction.addition)
+                    .filter(transaction => !transaction.addition && transaction.fromUserId),
+                loading: false
             })
         } else {
             this.setState({
                 transactionsFiltered: this.state.transactions
-                    .filter(transaction => transaction.addition)
+                    .filter(transaction => transaction.addition),
+                loading: false
             })
         }
         return true;
     }
 
     async componentDidMount() {
+        this.setState({ loading: true })
         const user = JSON.parse(sessionStorage.getItem('EkkiBank::User'));
 
         this.subscribeToTransactionEvents()
@@ -50,6 +50,7 @@ export default class Transactions extends Component {
         this.setState({
             transactions: transactions.data,
             transactionsFiltered: transactions.data,
+            loading: false
         })
 
     }
@@ -60,7 +61,6 @@ export default class Transactions extends Component {
 
 
         await io.on(`transaction-${user.cpf}`, data => {
-            console.log(data)
             this.setState({
                 updateTransactions: true
             })
@@ -68,6 +68,8 @@ export default class Transactions extends Component {
     }
 
     updateTransactions = async () => {
+
+        this.setState({ loading: true })
         const user = JSON.parse(sessionStorage.getItem('EkkiBank::User'));
 
 
@@ -76,17 +78,20 @@ export default class Transactions extends Component {
         this.setState({
             transactions: transactions.data,
             transactionsFiltered: transactions.data,
-            updateTransactions: false
+            updateTransactions: false,
+            loading: false
         })
     }
 
+    handleChange = (e, data) => this.sortTransactions(data.activeIndex)
+
     render() {
-        const { transactionsFiltered, updateTransactions } = this.state
+        const { transactionsFiltered, updateTransactions, loading } = this.state
 
         const panes = [
-            { menuItem: 'Todas', render: () => <Tab.Pane attached={false}><TransactionsList transactions={transactionsFiltered} /></Tab.Pane> },
-            { menuItem: 'Enviadas', render: () => <Tab.Pane attached={false}><TransactionsList transactions={transactionsFiltered} /></Tab.Pane> },
-            { menuItem: 'Recebidas', render: () => <Tab.Pane attached={false}><TransactionsList transactions={transactionsFiltered} /></Tab.Pane> },
+            { menuItem: { key: 'all', content: 'Todas' }, render: () => <Tab.Pane attached={false}><TransactionsList loading={loading} transactions={transactionsFiltered} /></Tab.Pane> },
+            { menuItem: { key: 'sent', icon: 'arrow down', content: 'Enviadas' }, render: () => <Tab.Pane attached={false}><TransactionsList loading={loading} transactions={transactionsFiltered} /></Tab.Pane> },
+            { menuItem: { key: 'received', icon: 'arrow up', content: 'Recebidas' }, render: () => <Tab.Pane attached={false}><TransactionsList loading={loading} transactions={transactionsFiltered} /></Tab.Pane> },
         ]
 
 
@@ -108,7 +113,7 @@ export default class Transactions extends Component {
                                 color="teal"
                                 content="Você possui novas transferências, clique para atualizar."></Button>}
                     </Segment>
-                    {transactionsFiltered && <Tab menu={{ secondary: true, pointing: true }} panes={panes} />}
+                    {transactionsFiltered && <Tab onTabChange={this.handleChange} menu={{ secondary: true }} panes={panes} />}
                 </Container>
             </DefaultLayout >
         )

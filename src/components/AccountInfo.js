@@ -36,7 +36,6 @@ export default class AccountInfo extends Component {
         const user = JSON.parse(sessionStorage.getItem('EkkiBank::User'))
 
         io.on(`account-${user.cpf}`, data => {
-            console.log(data)
             this.setState({
                 account: data
             })

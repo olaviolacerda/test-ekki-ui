@@ -2,3 +2,5 @@
 @secondaryColor: #8f94fb;
 @red: #ff5d70;
 @green: #00ca9b;
+@pageBackground: #f2f3f8;
+@grey: #6c7293;

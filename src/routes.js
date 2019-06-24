@@ -6,7 +6,6 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import Login from './pages/Login'
 import Register from './pages/Register'
 
-import Home from './pages/Home'
 import Transactions from './pages/Transactions'
 import Contacts from './pages/Contacts';
 
@@ -23,7 +22,6 @@ const Routes = () => (
         <Route path='/login' exact component={Login} />
         <Route path="/register" component={Register} />
         <Switch >
-            <ForbbidenRoute path='/' exact component={Home} />
             <ForbbidenRoute path="/transactions" component={Transactions} />
             <ForbbidenRoute path="/contacts" component={Contacts} />
         </Switch>
