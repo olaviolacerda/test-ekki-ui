@@ -56,7 +56,7 @@ export default class Transactions extends Component {
     }
 
     subscribeToTransactionEvents = async () => {
-        const io = socket('http://localhost:3001')
+        const io = socket('https://ekki-api-olavio.herokuapp.com')
         const user = JSON.parse(sessionStorage.getItem('EkkiBank::User'))
 
 

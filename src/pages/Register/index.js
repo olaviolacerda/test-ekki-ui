@@ -37,12 +37,12 @@ export default class Register extends Component {
             return false
         }
 
-        if (this.state.cpf.lenght < 11) {
+        if (this.state.cpf.length < 11) {
             this.setState({ errorCpf: true })
             return false
         }
 
-        if (this.state.phone.lenght == 0) {
+        if (this.state.phone.length == 0) {
             this.setState({ erroPhone: true })
             return false
         }
@@ -62,7 +62,7 @@ export default class Register extends Component {
             } else {
                 this.notify('Algo deu errado no seu cadastro, revise suas informações.');
             }
-        }).catch(error => { this.notify(error.message); this.setState({ loading: false }) })
+        }).catch(error => { this.notify(`CPF já existente.`); this.setState({ loading: false }) })
 
     }
 

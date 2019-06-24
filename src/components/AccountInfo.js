@@ -32,7 +32,7 @@ export default class AccountInfo extends Component {
 
 
     subscribeToAccountEvents = () => {
-        const io = socket('http://localhost:3001')
+        const io = socket('https://ekki-api-olavio.herokuapp.com')
         const user = JSON.parse(sessionStorage.getItem('EkkiBank::User'))
 
         io.on(`account-${user.cpf}`, data => {

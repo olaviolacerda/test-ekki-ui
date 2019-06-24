@@ -82,7 +82,7 @@ export default class Login extends Component {
 </Button>
                 </Form>
 
-                Ainda não possuí conta? <Link to="/register">Criar</Link>
+                Ainda não possuí conta? <Link to="/">Criar</Link>
             </DefaultLayout >
         );
     }
