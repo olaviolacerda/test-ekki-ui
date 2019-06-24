@@ -15,7 +15,6 @@ export default class TransactionModal extends Component {
         await api.delete(`contacts/${this.props.contactId}`)
             .then(resp => {
                 this.setState({ open: false })
-                console.log(resp)
                 toast.success(resp.data.message, {
                     autoClose: 1500,
                     onClose: () => window.location.reload()
@@ -33,7 +32,7 @@ export default class TransactionModal extends Component {
         return <div>
             <Modal open={open} size={'mini'} dimmer="blurring"
                 trigger={
-                    <Button labelPosition='right' color="red" icon onClick={(e) => this.setState({ open: true }, console.log(e))}>
+                    <Button labelPosition='right' color="red" icon onClick={(e) => this.setState({ open: true })}>
                         <Icon inverted name='user remove' />Remover
                     </Button>
                 }
