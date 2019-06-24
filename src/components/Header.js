@@ -37,7 +37,7 @@ export default class MenuExampleBasic extends Component {
         return (
             <div>
                 <Menu borderless fixed={"top"} >
-                    <Menu.Item color="grey">Ekki Bank</Menu.Item>
+                    <Menu.Item color="grey"><Icon name="exchange" /></Menu.Item>
                     <Menu.Item as={Link} name='extrato' to="/transactions" active={activeItem === 'extrato'} onClick={this.handleItemClick}>
                         Transferências
         </Menu.Item>

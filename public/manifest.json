@@ -1,6 +1,12 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "name": "EkkiBank Olavio PWA",
+  "short_name": "ekkibankolavio",
+  "theme_color": "#4e54c8",
+  "background_color": "#e0e1e2",
+  "display": "standalone",
+  "orientation": "portrait",
+  "Scope": "/",
+  "start_url": "/",
   "icons": [
     {
       "src": "favicon.ico",

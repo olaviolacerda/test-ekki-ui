@@ -31,7 +31,7 @@ export default class TransactionModal extends Component {
         const { userName } = this.props
 
         return <div>
-            <Modal open={open} size={'tiny'} dimmer="blurring"
+            <Modal open={open} size={'mini'} dimmer="blurring"
                 trigger={
                     <Button labelPosition='right' color="red" icon onClick={(e) => this.setState({ open: true }, console.log(e))}>
                         <Icon inverted name='user remove' />Remover
