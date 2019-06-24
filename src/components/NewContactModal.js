@@ -50,7 +50,7 @@ export default class NewContact extends Component {
         const { phone, name } = this.props.user
 
         return <div>
-            <Modal closeOnDimmerClick={true} open={open} size={'small'} dimmer="blurring"
+            <Modal closeOnDimmerClick={true} open={open} size={'mini'} dimmer="blurring"
                 trigger={<Button icon labelPosition='right' secondary type="submit" onClick={() => this.setState({ open: true })}><Icon inverted name='user plus' />Adicionar</Button>}
             >
                 <Modal.Header>Novo contato</Modal.Header>

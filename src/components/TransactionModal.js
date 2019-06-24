@@ -73,7 +73,7 @@ export default class TransactionModal extends Component {
         const { open, account, contacts, amount } = this.state
         const { selectedContact } = this.props
         return <div>
-            {contacts.length > 0 || selectedContact ? (<Modal closeOnDimmerClick={true} open={open} size={'small'} dimmer="blurring"
+            {contacts.length > 0 || selectedContact ? (<Modal closeOnDimmerClick={true} open={open} size={'mini'} dimmer="blurring"
                 trigger={<Button icon labelPosition='right' color="green" onClick={() => this.setState({ open: true })}><Icon inverted name='arrow right' />Realizar nova transferência</Button>}
             >
                 <Modal.Header>Nova transferência</Modal.Header>

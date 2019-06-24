@@ -3,7 +3,7 @@
   "short_name": "ekkibankolavio",
   "theme_color": "#4e54c8",
   "background_color": "#e0e1e2",
-  "display": "browser",
+  "display": "standalone",
   "orientation": "portrait",
   "Scope": "/",
   "start_url": "/",
@@ -49,5 +49,4 @@
       "type": "image/png"
     }
   ],
-  "splash_pages": null
 }

@@ -20,7 +20,6 @@ export default class Transactions extends Component {
         this.setState({ loading: true })
         const { transactions } = this.state;
 
-        console.log(transactions)
         if (orderBy == 0) {
             this.setState({ transactionsFiltered: transactions, loading: false })
         } else if (orderBy == 1) {
@@ -94,7 +93,6 @@ export default class Transactions extends Component {
             { menuItem: { key: 'received', icon: 'arrow up', content: 'Recebidas' }, render: () => <Tab.Pane attached={false}><TransactionsList loading={loading} transactions={transactionsFiltered} /></Tab.Pane> },
         ]
 
-        console.log(transactionsFiltered)
 
         return (
             <DefaultLayout>

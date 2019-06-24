@@ -6,7 +6,6 @@ import TransactionModal from '../../components/TransactionModal'
 
 const ContactsList = ({ contacts }) => <List verticalAlign='middle'>
     {contacts.map(contact => {
-        console.log(contact)
         return <List.Item key={contact.contactId}>
             <List.Item>
                 <Segment clearing >
