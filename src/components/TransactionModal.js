@@ -101,7 +101,7 @@ export default class TransactionModal extends Component {
                                 options={contacts}
                                 onChange={this.handleUserChange}
                             />)}
-                        <Form.Input error={this.state.error} labelPosition='left' type='text' fluid label='Valor' name="amount" placeholder='Digite o valor' onChange={this.handleAmountChange}>
+                        <Form.Input error={this.state.error} labelPosition='left' type='text' fluid label='Valor' name="amount" placeholder='Digite o valor com ponto (e.g 1435.93)' onChange={this.handleAmountChange}>
                             <Label basic>$</Label>
                             <input />
                         </Form.Input>
